@@ -10,8 +10,11 @@ public static  class Parameters
     public enum ParamsName
     {
         WallsAmount,
-        TargetSpeed
-    };
+        TargetSpeed,
+		ToleranceErrorTime,
+		SongTempo
+
+	};
 	public static string GetParameter(int index)
 	{
 		return Names[index];
@@ -24,6 +27,9 @@ public static  class Parameters
     {
         Names.Add("WallsAmmount");
         Names.Add("TargetSpeed");
+		Names.Add("ToleranceErrorTime");
+		Names.Add("SongTempo");
 
-    }
+
+	}
 }
