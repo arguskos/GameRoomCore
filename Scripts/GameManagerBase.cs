@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
-using UnityEditor;
 using UnityEngine;
 
 public class GameManagerBase : MonoBehaviour
@@ -19,7 +18,8 @@ public class GameManagerBase : MonoBehaviour
 		set
 		{
 			_score = value;
-			OnScoreChange();
+			if (OnScoreChange!=null)
+				OnScoreChange();
 		}
 	}
 	public float GameTime = 20;
