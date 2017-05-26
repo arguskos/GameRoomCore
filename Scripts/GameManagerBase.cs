@@ -16,7 +16,13 @@ public class GameManagerBase : MonoBehaviour
 	private float _passedTime;
 	private int _currentMoment;
 	public List<Dictionary<string, MinMaxPair>> AllData = new List<Dictionary<string, MinMaxPair>>();
+
+	public List<List<MomentInfo>> AllMomentsInfo = new List<List<MomentInfo>>();
+
 	private Dictionary<string, float> ReturnInfo = new Dictionary<string, float>();
+
+	//private List<MomentInfo>  ReturnInfo = new List<MomentInfo>();
+
 	enum Parametrs { TargetSpeed, WallsAmout }
 	public float GetParameter(string name)
 	{
