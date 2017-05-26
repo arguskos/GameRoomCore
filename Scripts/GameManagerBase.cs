@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using UnityEditor;
@@ -10,8 +11,17 @@ public class GameManagerBase : MonoBehaviour
 	public static GameManagerBase Instance;
 
 	public GameMoment[] Moments;
-
-
+	private int _score ;
+	public int Score { get
+		{
+			return _score;
+		}
+		set
+		{
+			_score = value;
+			OnScoreChange();
+		}
+	}
 	public float GameTime = 20;
 	private float _passedTime;
 	private int _currentMoment;
@@ -28,6 +38,8 @@ public class GameManagerBase : MonoBehaviour
 	{
 		return ReturnInfo[name];
 	}
+	public delegate void ScoreChange();
+	public  ScoreChange OnScoreChange;
 
 	/// <summary>
 	/// Create serise of parameters with name (moments)
@@ -39,11 +51,13 @@ public class GameManagerBase : MonoBehaviour
 	void Awake()
 	{
 		Instance = this;
+
 	}
 	// Use this for initialization
 	protected void Start()
 	{
 		print("start");
+		Score = 0;
 		//TargetSpeed = Moments[_currentMoment].MinTargetSpeed;
 		//WallsToPlace = Moments[_currentMoment].MinWalls;
 		//get all data 
@@ -53,11 +67,14 @@ public class GameManagerBase : MonoBehaviour
 			print(moment.name);
 			AllData.Add(moment.MomentInfo);
 		}
-		foreach (var entery in AllData[0])
+		if (AllData.Count > 0)
 		{
-			print(entery.Key);
-			ReturnInfo.Add(entery.Key, entery.Value.Min);
+			foreach (var entery in AllData[0])
+			{
+				print(entery.Key);
+				ReturnInfo.Add(entery.Key, entery.Value.Min);
 
+			}
 		}
 	}
 
@@ -78,11 +95,14 @@ public class GameManagerBase : MonoBehaviour
 	// Update is called once per frame
 	protected void Update()
 	{
+
+		
 		_passedTime += Time.deltaTime;
 		//print((_passedTime - GameTime / Moments.Length * _currentMoment+GameTime/Moments.Length) / 3.333*(_currentMoment+1));
 		//print((GameTime / Moments.Length * (_currentMoment + 1)));
 		if (_currentMoment < Moments.Length)
 		{
+
 			float percentageForCurrentMoment = (_passedTime - (GameTime / Moments.Length * _currentMoment)) / (GameTime / Moments.Length);
 			//TargetSpeed = (Moments[_currentMoment].MaxTargetSpeed- Moments[_currentMoment].MinTargetSpeed )* percentageForCurrentMoment;
 			//WallsToPlace =(int)((Moments[_currentMoment].MaxWalls - Moments[_currentMoment].MinWalls) * percentageForCurrentMoment );
