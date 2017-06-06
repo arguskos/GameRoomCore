@@ -5,12 +5,12 @@ using UnityEngine;
 public class MomentInfo
 
 {
-	public MomentInfo(string name)
+	public MomentInfo(Parameters.ParamsName name)
 	{
 		Name = name;
 		MinMax = new MinMaxPair(0, 0);
 	}
-	public string Name;
+	public Parameters.ParamsName Name;
 	public MinMaxPair MinMax;
 }
 

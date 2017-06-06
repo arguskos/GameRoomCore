@@ -27,7 +27,7 @@ public class GameMoment : ScriptableObject {
 
 
 
-	public Dictionary<string, MinMaxPair> MomentInfo = new Dictionary<string, MinMaxPair>();
+	public Dictionary<Parameters.ParamsName, MinMaxPair> MomentInfo = new Dictionary<Parameters.ParamsName, MinMaxPair>();
 	public List<MomentInfo> MomentInfo2;
 
 	public void Init () {

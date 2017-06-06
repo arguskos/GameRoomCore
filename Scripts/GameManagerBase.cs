@@ -7,7 +7,7 @@ using UnityEngine;
 public class GameManagerBase : MonoBehaviour
 {
 
-	public static GameManagerBase Instance;
+	public  static   GameManagerBase Instance;
 
 	public GameMoment[] Moments;
 	private int _score ;
@@ -25,19 +25,22 @@ public class GameManagerBase : MonoBehaviour
 	public float GameTime = 20;
 	private float _passedTime;
 	private int _currentMoment;
-	public List<Dictionary<string, MinMaxPair>> AllData = new List<Dictionary<string, MinMaxPair>>();
+	public List<Dictionary<Parameters.ParamsName, MinMaxPair>> AllData = new List<Dictionary<Parameters.ParamsName, MinMaxPair>>();
 
 	public List<List<MomentInfo>> AllMomentsInfo = new List<List<MomentInfo>>();
 
-	private Dictionary<string, float> ReturnInfo = new Dictionary<string, float>();
+	private Dictionary<Parameters.ParamsName, float> ReturnInfo = new Dictionary<Parameters.ParamsName, float>();
 
 	//private List<MomentInfo>  ReturnInfo = new List<MomentInfo>();
 
-	enum Parametrs { TargetSpeed, WallsAmout }
-	public float GetParameter(string name)
+	
+	public float GetParameter(Parameters.ParamsName name)
 	{
-		return ReturnInfo[name];
+		
+		return ReturnInfo[Parameters.GetParameter(name)];
 	}
+
+
 	public delegate void ScoreChange();
 	public  ScoreChange OnScoreChange;
 
@@ -54,7 +57,7 @@ public class GameManagerBase : MonoBehaviour
 
 	}
 	// Use this for initialization
-	protected void Start()
+	protected virtual void Start()
 	{
 		print("start");
 		Score = 0;
@@ -93,7 +96,7 @@ public class GameManagerBase : MonoBehaviour
 	}
 
 	// Update is called once per frame
-	protected void Update()
+	protected virtual void Update()
 	{
 
 		
