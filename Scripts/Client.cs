@@ -37,13 +37,13 @@ public class Client : MonoBehaviour
 
 
 	public InputField TeamId;
+    public Text RoomTimer;
 
 
 
 
-	private int ID = -1;
+    private int ID = -1;
 	// Use this for initialization
-	public Text RoomTimer;
 
 	internal bool SocketReady = false;
 	private TcpClient _mySocket;
@@ -52,7 +52,7 @@ public class Client : MonoBehaviour
 	private StreamReader _myReader;
 	private const string Host = "127.0.0.1";
 	private const int Port = 8000;
-	private bool _created = false;
+	private bool _playing = true;
 
 	void Start()
 	{
@@ -60,14 +60,14 @@ public class Client : MonoBehaviour
 		SetupSocket();
 		StartCoroutine(CheckTime());
 
-		GameManager.MyInstance.OnNewMoment += OnNewMoment;
+		GameManager.Instance.OnNewMoment += OnNewMoment;
 
 	}
 
 	private void OnNewMoment()
 	{
 		WriteSocket("recieve");
-		SendScore lol = new SendScore(0, 100);
+	    OnNewGameMoment lol = new OnNewGameMoment();
 		new BinaryFormatter().Serialize(_myStream, lol);
 	}
 	public void SetupSocket()
@@ -85,7 +85,7 @@ public class Client : MonoBehaviour
 	public void WriteSocket(string theLine)
 	{
 		if (!SocketReady)
-			return;
+			return; 
 		string foo = theLine + "\r\n";
 		_myWriter.Write(foo);
 		_myWriter.Flush();
@@ -98,7 +98,8 @@ public class Client : MonoBehaviour
 			return _myReader.ReadLine();
 		return "";
 	}
-	public void SendScore()
+ 
+    public void SendScore()
 	{
 		WriteSocket("recieve");
 		SendScore lol = new SendScore(0, 100);
@@ -107,19 +108,25 @@ public class Client : MonoBehaviour
 	public void CreateTeam()
 	{
 		WriteSocket("recieve");
-		try
-		{
-			int.TryParse(TeamId.text, out ID);
-
-		}
-		catch (Exception e)
-		{
-			ID = 1;
-			print("ERROR PARSING ID ");
-		}
+	    if (TeamId == null)
+	    {
+	        ID = 1;
+	    }
+	    else
+	    {
+	        try
+	        {
+	            int.TryParse(TeamId.text, out ID);
+	        }
+	        catch (Exception e)
+	        {
+	            ID = 1;
+	            print("ERROR PARSING ID ");
+	        }
+        }
 		TeamCreation lol = new TeamCreation(0, ID);
 		new BinaryFormatter().Serialize(_myStream, lol);
-		_created = true;
+		_playing = true;
 	}
 
 	public void GetServerMessage()
@@ -131,10 +138,7 @@ public class Client : MonoBehaviour
 		{
 			RoomTimer.text=(d as ServerTime).Time.ToString();
 		}
-		else if ((d as StateChanged) != null)
-		{
-			SceneManager.LoadScene("AR");
-		}
+		
 		//print(d.Time);
 	}
 	public void CloseSocket()
@@ -153,7 +157,7 @@ public class Client : MonoBehaviour
 	{
 		while (true)
 		{
-			if (_created)
+			if (_playing)
 			{
 
 				GetServerMessage();

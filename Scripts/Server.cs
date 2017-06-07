@@ -105,7 +105,7 @@ public class Server : MonoBehaviour
         string url = "http://192.168.0.151:8000/Finish/" + ID;
 
         WWWForm form = new WWWForm();
-        form.AddField("score", GameManagerBase.Instance.Score);
+        form.AddField("score", GameManagerBase.Score);
         byte[] rawData = form.data;
 
         // headers.Add("X-Auth-Token", "7da4596d42e24f9798d73ec40bbbbd81");

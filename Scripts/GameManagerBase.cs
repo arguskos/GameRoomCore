@@ -7,11 +7,10 @@ using UnityEngine;
 public class GameManagerBase : MonoBehaviour
 {
 
-	public  static   GameManagerBase Instance;
 
 	public GameMoment[] Moments;
-	private int _score ;
-	public int Score { get
+	private static int _score ;
+	public static int Score { get
 		{
 			return _score;
 		}
@@ -42,7 +41,7 @@ public class GameManagerBase : MonoBehaviour
 
 
 	public delegate void ScoreChange();
-	public  ScoreChange OnScoreChange;
+	public  static  ScoreChange OnScoreChange;
 
 	/// <summary>
 	/// Create serise of parameters with name (moments)
@@ -51,15 +50,10 @@ public class GameManagerBase : MonoBehaviour
 	/// For every object in a scene with interface bla call function do on spread calls....
 	/// 
 	/// </summary>
-	void Awake()
-	{
-		Instance = this;
 
-	}
 	// Use this for initialization
 	protected virtual void Start()
 	{
-		print("start");
 		Score = 0;
 		//TargetSpeed = Moments[_currentMoment].MinTargetSpeed;
 		//WallsToPlace = Moments[_currentMoment].MinWalls;
@@ -67,14 +61,14 @@ public class GameManagerBase : MonoBehaviour
 		foreach (var moment in Moments)
 		{
 			moment.Init();
-			print(moment.name);
+
 			AllData.Add(moment.MomentInfo);
 		}
 		if (AllData.Count > 0)
 		{
 			foreach (var entery in AllData[0])
 			{
-				print(entery.Key);
+
 				ReturnInfo.Add(entery.Key, entery.Value.Min);
 
 			}
@@ -123,10 +117,13 @@ public class GameManagerBase : MonoBehaviour
 
 			if (_passedTime > GameTime / Moments.Length * (_currentMoment + 1))
 			{
-				print(_currentMoment);
+				print("Current moment"+_currentMoment+" of all "+ Moments.Length);
 				_currentMoment++;
-				OnNewMoment();
-			}
+			    if (OnNewMoment != null)
+			    {
+			        OnNewMoment();
+                }
+            }
 		}
 	}
 }

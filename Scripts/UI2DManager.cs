@@ -14,24 +14,25 @@ public class UI2DManager : MonoBehaviour {
     // Use this for initialization
     public void Start()
 	{
-	    GameManagerBase.Instance.OnScoreChange += OnScoreChange;
+	    GameManagerBase.OnScoreChange += OnScoreChange;
 
     }
     public void Awake()
 	{
-	}
-	void OnScoreChange()
+
+    }
+    void OnScoreChange()
 	{
-		Score.text = GameManagerBase.Instance.Score.ToString();
+		Score.text = GameManagerBase.Score.ToString();
 	    if (DebugScore)
 	    {
-		    DebugScore.text = GameManagerBase.Instance.Score.ToString();
+		    DebugScore.text = GameManagerBase.Score.ToString();
 
         }
     }
 
 	void Destroy()
 	{
-		GameManagerBase.Instance.OnScoreChange -= OnScoreChange;
+		GameManagerBase.OnScoreChange -= OnScoreChange;
 	}
 }
