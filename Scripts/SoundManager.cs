@@ -107,25 +107,25 @@ public class SoundManager : MonoBehaviour
         }
 
         //Ambient Blending
-        for (int i = 0; i < ambientArray.Length; i++)
-        {
-            if (ambientIntensity < i)
-            {
-            }
-            else if (ambientIntensity > i)
-            {
-                ambientArray[i].GetComponent<AudioSource>().volume = ambientIntensity % 1.0f;
-            }
+        // for (int i = 0; i < ambientArray.Length; i++)
+        // {
+        //     if (ambientIntensity < i)
+        //     {
+        //     }
+        //     else if (ambientIntensity > i)
+        //     {
+        //         ambientArray[i].GetComponent<AudioSource>().volume = ambientIntensity % 1.0f;
+        //     }
 
-            if (ambientIntensity - 1.0f >= i)
-            {
-                ambientArray[i].GetComponent<AudioSource>().volume = 1.0f;
-            }
-        }
+        //     if (ambientIntensity - 1.0f >= i)
+        //     {
+        //         ambientArray[i].GetComponent<AudioSource>().volume = 1.0f;
+        //     }
+        // }
 
         //Randomize sounds
         ambientIntensity = 0.5f + ((ambientArray.Length) * (Time.realtimeSinceStartup / totalTimeInSeconds));
-        musicIntensity = -1 + (musicArray.Length + 1) * (Time.realtimeSinceStartup / totalTimeInSeconds);
+        musicIntensity = 0 + (musicArray.Length + 1) * (Time.realtimeSinceStartup / totalTimeInSeconds);
 
         //Debug Soundtests
         if (Input.GetKeyDown(KeyCode.Alpha1))
