@@ -7,19 +7,28 @@ public class UI2DManager : MonoBehaviour {
 
 
 	public Text Score;
-	// Use this for initialization
-	public void Start()
+
+    public Text DebugScore;
+    public Text Time;
+
+    // Use this for initialization
+    public void Start()
 	{
-		
-	}
-	public void Awake()
+	    GameManagerBase.Instance.OnScoreChange += OnScoreChange;
+
+    }
+    public void Awake()
 	{
-		GameManagerBase.Instance.OnScoreChange += OnScoreChange;
 	}
 	void OnScoreChange()
 	{
 		Score.text = GameManagerBase.Instance.Score.ToString();
-	}
+	    if (DebugScore)
+	    {
+		    DebugScore.text = GameManagerBase.Instance.Score.ToString();
+
+        }
+    }
 
 	void Destroy()
 	{
