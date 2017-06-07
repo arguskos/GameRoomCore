@@ -32,7 +32,7 @@ public class GameManagerBase : MonoBehaviour
 	private Dictionary<Parameters.ParamsName, float> ReturnInfo = new Dictionary<Parameters.ParamsName, float>();
 
 	//private List<MomentInfo>  ReturnInfo = new List<MomentInfo>();
-
+	public Action OnNewMoment;
 	
 	public float GetParameter(Parameters.ParamsName name)
 	{
@@ -90,10 +90,7 @@ public class GameManagerBase : MonoBehaviour
 	{
 		//send score...
 	}
-	public void OnNewMoment()
-	{
-		//WallsPlacer.Instance.OnNewMoment();
-	}
+
 
 	// Update is called once per frame
 	protected virtual void Update()
