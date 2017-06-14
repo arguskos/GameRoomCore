@@ -35,7 +35,7 @@ public class GameManagerBase : MonoBehaviour
 	
 	public float GetParameter(Parameters.ParamsName name)
 	{
-		
+	    
 		return ReturnInfo[Parameters.GetParameter(name)];
 	}
 

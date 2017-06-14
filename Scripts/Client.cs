@@ -50,7 +50,7 @@ public class Client : MonoBehaviour
 	private NetworkStream _myStream;
 	private StreamWriter _myWriter;
 	private StreamReader _myReader;
-	private const string Host = "127.0.0.1";
+	private const string Host = "192.168.0.150";
 	private const int Port = 8000;
 	private bool _playing = true;
 
@@ -62,7 +62,7 @@ public class Client : MonoBehaviour
 
 		GameManager.Instance.OnNewMoment += OnNewMoment;
 
-	}
+	}   
 
 	private void OnNewMoment()
 	{
@@ -133,11 +133,20 @@ public class Client : MonoBehaviour
 	{
 
 		WriteSocket("Info");
-		var d = new BinaryFormatter().Deserialize(_myStream) as BaseMessage;
-		if ((d as ServerTime) != null)
-		{
-			RoomTimer.text=(d as ServerTime).Time.ToString();
-		}
+	    try
+	    {
+
+	        var  d = new BinaryFormatter().Deserialize(_myStream);
+            if ((d as ServerTime) != null)
+            {
+                RoomTimer.text = (d as ServerTime).Time.ToString();
+            }
+        }
+	    catch (Exception e)
+	    {
+	        
+	    }
+		
 		
 		//print(d.Time);
 	}
@@ -160,7 +169,7 @@ public class Client : MonoBehaviour
 			if (_playing)
 			{
 
-				GetServerMessage();
+                GetServerMessage();
 
 			}
 			yield return new WaitForSeconds(0.5f);
@@ -171,13 +180,16 @@ public class Client : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
+	    if (_myStream.DataAvailable)
+	    {
+	        
+	    }
+		//if (Input.GetKeyDown(KeyCode.Space))
 
-		if (Input.GetKeyDown(KeyCode.Space))
 
-
-		{
-			SendScore();
-		}
+		//{
+		//	SendScore();
+		//}
 	}
 
 } 
